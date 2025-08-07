@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mike Aguilar">
-<meta name="dcterms.date" content="2025-08-06">
+<meta name="dcterms.date" content="2025-08-07">
 
 <title>HIV and Medicaid Expansion</title>
 <style>
@@ -4348,15 +4348,15 @@ window.onload = function() {
   <li><a href="#year" id="toc-year" class="nav-link" data-scroll-target="#year">Year</a></li>
   <li><a href="#policy-change" id="toc-policy-change" class="nav-link" data-scroll-target="#policy-change">Policy Change</a></li>
   </ul></li>
+  </ul></li>
   <li><a href="#clean" id="toc-clean" class="nav-link" data-scroll-target="#clean">Clean</a>
   <ul>
   <li><a href="#count-missing" id="toc-count-missing" class="nav-link" data-scroll-target="#count-missing">Count missing</a></li>
   <li><a href="#deaths" id="toc-deaths" class="nav-link" data-scroll-target="#deaths">Deaths</a></li>
   <li><a href="#refine-age-groups" id="toc-refine-age-groups" class="nav-link" data-scroll-target="#refine-age-groups">Refine Age groups</a></li>
+  </ul></li>
+  <li><a href="#de-meaned" id="toc-de-meaned" class="nav-link" data-scroll-target="#de-meaned">De Meaned</a></li>
   <li><a href="#save" id="toc-save" class="nav-link" data-scroll-target="#save">Save</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">EDA</a></li>
   </ul>
 </nav>
 </div>
@@ -4367,6 +4367,7 @@ window.onload = function() {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">HIV and Medicaid Expansion</h1>
+<p class="subtitle lead">Data Prep</p>
 </div>
 
 
@@ -4383,7 +4384,7 @@ window.onload = function() {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 6, 2025</p>
+      <p class="date">August 7, 2025</p>
     </div>
   </div>
   
@@ -4585,10 +4586,11 @@ window.onload = function() {
 <p>So expansion year could be year, 0 (never switched), or NA (for U.S.)</p>
 </section>
 </section>
-<section id="clean" class="level2">
-<h2 class="anchored" data-anchor-id="clean">Clean</h2>
-<section id="count-missing" class="level3">
-<h3 class="anchored" data-anchor-id="count-missing">Count missing</h3>
+</section>
+<section id="clean" class="level1">
+<h1>Clean</h1>
+<section id="count-missing" class="level2">
+<h2 class="anchored" data-anchor-id="count-missing">Count missing</h2>
 <p>Let’s count i) entered as blank, ii) entered as NA, iii) entered as NaN</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -5071,8 +5073,8 @@ measure_name                             Number Percent Rate
 <p>Interesting. There is a big gap in the 1980’s where there are no zeros. That means that for many metrics they simply didn’t include rather than coding as zero.</p>
 <p>There is variability by measure, so let’s focus on Deaths for now.</p>
 </section>
-<section id="deaths" class="level3">
-<h3 class="anchored" data-anchor-id="deaths">Deaths</h3>
+<section id="deaths" class="level2">
+<h2 class="anchored" data-anchor-id="deaths">Deaths</h2>
 <p>Focus on aggregate level. Whole US. All Ages. Pick one sex to start.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -5097,8 +5099,8 @@ measure_name                             Number Percent Rate
 <p>Same for men. Good.</p>
 <p>We might still have issues for specific states or age groups. So, we need to check before running.</p>
 </section>
-<section id="refine-age-groups" class="level3">
-<h3 class="anchored" data-anchor-id="refine-age-groups">Refine Age groups</h3>
+<section id="refine-age-groups" class="level2">
+<h2 class="anchored" data-anchor-id="refine-age-groups">Refine Age groups</h2>
 <p>We saw before that there are overlapping age groups. Using all of these could lead us to double count.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -5128,17 +5130,35 @@ measure_name                             Number Percent Rate
 </div>
 </div>
 </section>
-<section id="save" class="level3">
-<h3 class="anchored" data-anchor-id="save">Save</h3>
+</section>
+<section id="de-meaned" class="level1">
+<h1>De Meaned</h1>
+<p>We should demean the series somehow so we can compare</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["location_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["measure_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["sex_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age_name"],"name":[4],"type":["ord"],"align":["right"]},{"label":["metric_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["year"],"name":[6],"type":["int"],"align":["right"]},{"label":["val"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["base_mean"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["val_demean"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1980","7":"0.00000","8":"433.7097","9":"-433.7097"},{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1981","7":"17.07897","8":"433.7097","9":"-416.6308"},{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1982","7":"24.69832","8":"433.7097","9":"-409.0114"},{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1983","7":"43.63878","8":"433.7097","9":"-390.0709"},{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1984","7":"84.94714","8":"433.7097","9":"-348.7626"},{"1":"California","2":"Deaths","3":"Male","4":"35-39 years","5":"Number","6":"1985","7":"161.82712","8":"433.7097","9":"-271.8826"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>A quick spot check suggests this worked. val_demean is demeaning based upon that specific location/measure/metric/sex/age unit.</p>
+<p>Is the average computed correctly? i.e. only for the pre treatment period? California was treated in 2014.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["BaseMeanCheck"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"433.7097"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Yes. Computing the mean correctly.</p>
+</section>
+<section id="save" class="level1">
+<h1>Save</h1>
 <p>The raw data is rather large. Let me save only the clean data file so that I can put this on shiny apps free tier.</p>
-</section>
-</section>
-</section>
-<section id="eda" class="level1">
-<h1>EDA</h1>
-<p>CAUTION: I’ve pushed DataClearn.rds to shinyapps.io server. If we change anything above this line, we need to re-commit to the server.</p>
-<iframe role="img" src="data:text/html; charset=UTF-8;charset=utf-8,%3C%21doctype%20html%3E%0A%3C%21%2D%2D%5Bif%20lt%20IE%207%20%5D%3E%0A%3Chtml%20lang%3D%22en%22%20class%3D%22no%2Djs%20ie6%22%3E%20%3C%21%5Bendif%5D%2D%2D%3E%0A%3C%21%2D%2D%5Bif%20IE%207%20%5D%3E%0A%3Chtml%20lang%3D%22en%22%20class%3D%22no%2Djs%20ie7%22%3E%20%3C%21%5Bendif%5D%2D%2D%3E%0A%3C%21%2D%2D%5Bif%20IE%208%20%5D%3E%0A%3Chtml%20lang%3D%22en%22%20class%3D%22no%2Djs%20ie8%22%3E%20%3C%21%5Bendif%5D%2D%2D%3E%0A%3C%21%2D%2D%5Bif%20%28gte%20IE%209%29%7C%21%28IE%29%5D%3E%3C%21%2D%2D%3E%0A%3Chtml%20lang%3D%22en%22%20class%3D%22no%2Djs%22%3E%20%3C%21%2D%2D%3C%21%5Bendif%5D%2D%2D%3E%0A%3Chead%3E%0A%3Cmeta%20charset%3D%22utf%2D8%22%3E%0A%3Cmeta%20http%2Dequiv%3D%27X%2DUA%2DCompatible%27%20content%3D%27IE%3Dedge%2Cchrome%3D1%27%3E%0A%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice%2Dwidth%2C%20initial%2Dscale%3D1%2E0%22%3E%0A%3C%21%2D%2D%20HTML5%20shim%20and%20Respond%2Ejs%20IE8%20support%20of%20HTML5%20elements%20and%20media%20queries%20%2D%2D%3E%0A%3C%21%2D%2D%5Bif%20lt%20IE%209%5D%3E%0A%3Cscript%20src%3D%22%2F%2Foss%2Emaxcdn%2Ecom%2Flibs%2Fhtml5shiv%2F3%2E7%2E0%2Fhtml5shiv%2Ejs%22%3E%3C%2Fscript%3E%0A%3Cscript%20src%3D%22%2F%2Foss%2Emaxcdn%2Ecom%2Flibs%2Frespond%2Ejs%2F1%2E3%2E0%2Frespond%2Emin%2Ejs%22%3E%3C%2Fscript%3E%0A%3C%21%5Bendif%5D%2D%2D%3E%0A%3Clink%20href%3D%22%2F%5F%5Fstatic%5F%5F%2Fcomponents%2F%40icon%2Fthemify%2Dicons%2Fthemify%2Dicons%2Ecss%3Fv%3D74945e1d23bc5d5606d3227cd8d89215caa019f4b28d668e6f02b2781a349539047652bed0b49d7f894c54541fb6c12f008ad7eda46515905be7e6d2c1cf69f6%22%20rel%3D%22stylesheet%22%2F%3E%0A%3Clink%20href%3D%22%2F%5F%5Fstatic%5F%5F%2Ffrontend%2Fcss%2Fstyle%2Ecss%3Fv%3D07049025a95746608ba399d5882bc336f051ee8e935aa3f97a998d719591d3abbb283ff4da5dee7187b7cc721a759196cf9ed4362dd9a7726617fd79ed4dc472%22%20rel%3D%22stylesheet%22%2F%3E%0A%3C%21%2D%2D%20block%20head%20%2D%2D%3E%0A%0A%3Cstyle%3E%0A%2Espinner%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%20auto%3B%0A%7D%0A%3C%2Fstyle%3E%0A%0A%3C%21%2D%2D%20block%20head%20%2D%2D%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%3Cheader%3E%0A%3C%21%2D%2D%20block%20header%20%2D%2D%3E%0A%0A%3C%21%2D%2D%20block%20header%20%2D%2D%3E%0A%3C%2Fheader%3E%0A%3Cdiv%20id%3D%22content%22%3E%0A%3C%21%2D%2D%20block%20content%20%2D%2D%3E%0A%0A%3Cdiv%20class%3D%22container%20vertical%2Dtable%22%3E%0A%3Cdiv%20class%3D%22row%20vertical%2Dalign%2Dmiddle%22%3E%0A%3Cdiv%20class%3D%22col%2Dlg%2D12%22%3E%0A%3Cdiv%20class%3D%22spinner%20text%2Dcenter%22%3E%0A%3Ch3%3EPlease%20Wait%3C%2Fh3%3E%0A%3Cimg%20alt%3D%22loading%22%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Ffrontend%2Fimages%2Fspinner%2Egif%3Fv%3Dce6bcde20b2f6c562913c06be83f9e7c8a19b008017407a3094b76fa82bbd6b7f4048e032e07e534d4ab5442b9105294d612863735077ab13a47653a14c5866e%22%2F%3E%0A%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%3C%21%2D%2D%20block%20content%20%2D%2D%3E%0A%3C%2Fdiv%3E%0A%3Cfooter%3E%0A%3C%21%2D%2D%20block%20footer%20%2D%2D%3E%0A%0A%3C%21%2D%2D%20block%20footer%20%2D%2D%3E%0A%3C%2Ffooter%3E%0A%3C%2Fbody%3E%0A%3Cscript%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Fcomponents%2Fjquery%2Fdist%2Fjquery%2Emin%2Ejs%3Fv%3Dbf6089ed4698cb8270a8b0c8ad9508ff886a7a842278e98064d5c1790ca3a36d5d69d9f047ef196882554fc104da2c88eb5395f1ee8cf0f3f6ff8869408350fe%22%20type%3D%22text%2Fjavascript%22%3E%3C%2Fscript%3E%0A%3Cscript%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Fcomponents%2Fbootstrap%2Fdist%2Fjs%2Fbootstrap%2Emin%2Ejs%3Fv%3Dcca79ead61c7b8fddaafb917d962814843736fe189cad15204be87ad1da73d247590e5f5aa39bea07a2842d6c3a4305221383297b417640a6f0df0d6bca8e453%22%20type%3D%22text%2Fjavascript%22%3E%3C%2Fscript%3E%0A%3Cscript%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Fcomponents%2Fiframe%2Dresizer%2Fjs%2FiframeResizer%2EcontentWindow%2Ejs%3Fv%3Df3d29f0ab8760cc6dfd51bc4a085f73618e294908a0d5ed5a8440ec7d2088857eea7eacd568d9d7414ecae76032970bfc68e593a0daaa43d8fb61701dbe276ab%22%20type%3D%22text%2Fjavascript%22%3E%3C%2Fscript%3E%0A%3Cscript%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Ffrontend%2Fscripts%2Fshinyapps%2Eframe%2Econtent%2Ejs%3Fv%3Dd886f2a347cfa6b3658e766b104da8e1889894b31b4b38db17fc339bb87d71219d4bfe9bd5b0cac5b0796fce434474e0192e448a0f3f84f19df8c7f8e3e59aab%22%20type%3D%22text%2Fjavascript%22%3E%3C%2Fscript%3E%0A%3C%21%2D%2D%20block%20layout%5Fscripts%20%2D%2D%3E%0A%0A%3Cscript%20src%3D%22%2F%5F%5Fstatic%5F%5F%2Ffrontend%2Fscripts%2Fshinyapps%2Ejs%3Fv%3D290dbc9d711ce3f15a5bb8fc4006299d26e60ab34a278d6a43fac6b2157fc27f8ce613ed2930774a0e91f3ec528bed3cc26cb6f581b2b8be1ef010472c4bd95e%22%20type%3D%22text%2Fjavascript%22%3E%3C%2Fscript%3E%0A%0A%3C%21%2D%2D%20block%20layout%5Fscripts%20%2D%2D%3E%0A%3C%21%2D%2D%20block%20scripts%20%2D%2D%3E%0A%0A%3Cscript%3E%0Avar%20app%5Furl%20%3D%20%27https%3A%2F%2Fmikeaguilar%2Eshinyapps%2Eio%2Feda%2Dapp%27%3B%0Avar%20healthcheck%5Fendpoint%20%3D%20%27%2F%5F%5Fhealth%2Dcheck%5F%5F%2F%27%3B%0Avar%20started%5Fat%20%3D%20new%20Date%28%29%2EgetTime%28%29%3B%0Avar%20finished%5Fat%20%3D%20null%3B%0Avar%20count%20%3D%200%3B%0Avar%20timeout%20%3D%20null%3B%0Afunction%20debug%28message%29%20%7B%0Aif%20%28window%2Econsole%20%26%26%20window%2Econsole%2Elog%29%20%7B%0Awindow%2Econsole%2Elog%28message%29%3B%0A%7D%0A%7D%0Afunction%20reload%28%29%20%7B%0Awindow%2Elocation%2Ereload%28true%29%3B%0A%7D%0Afunction%20wait%28%29%20%7B%0A%2F%2F%20wait%20and%20try%20again%0Acount%20%2B%3D%201%3B%0Avar%20snooze%20%3D%20Math%2Emin%283000%2C%20%28250%20%2A%20count%29%29%3B%0Adebug%28%22Application%20not%20loaded%2E%20Retrying%20in%20%22%20%2B%20snooze%20%2B%20%22ms%22%29%3B%0AsetTimeout%28function%20%28%29%20%7B%0Acheck%28%29%3B%0A%7D%2C%20snooze%29%3B%0A%7D%0Afunction%20check%28%29%20%7B%0Avar%20url%20%3D%20app%5Furl%20%2B%20healthcheck%5Fendpoint%3B%0A%24%2Eajax%28%7Burl%3A%20url%2C%20cache%3A%20false%7D%29%0A%2Edone%28function%20%28data%2C%20textStatus%2C%20xhr%29%20%7B%0Aif%20%28xhr%2Estatus%20%3D%3D%3D%20200%29%20%7B%0A%2F%2F%20log%20time%20elapsed%0Afinished%5Fat%20%3D%20new%20Date%28%29%2EgetTime%28%29%3B%0Avar%20elapsed%20%3D%20finished%5Fat%20%2D%20started%5Fat%3B%0Adebug%28%22Application%20loaded%20in%20%22%20%2B%20elapsed%20%2B%20%22ms%20%28%22%20%2B%20count%20%2B%20%22%20checks%29%2E%20Reloading%2E%22%29%3B%0Aif%20%28timeout%20%21%3D%20null%29%20%7B%0AclearTimeout%28timeout%29%3B%0A%7D%0Areload%28%29%3B%0A%7D%20else%20%7B%0Await%28%29%3B%0A%7D%0A%7D%29%0A%2Efail%28function%28%29%20%7B%0Await%28%29%3B%0A%7D%29%3B%0A%7D%0A%24%28document%29%2Eready%28function%20%28%29%20%7B%0Adebug%28%22Waiting%20for%20application%20to%20load%20%2E%2E%2E%22%29%3B%0Acheck%28%29%3B%0A%2F%2F%20reload%20regardless%20of%20success%20after%2010%20seconds%0Atimeout%20%3D%20setTimeout%28function%20%28%29%20%7B%0Adebug%28%22Application%20failed%20to%20load%20after%2010%20seconds%2E%20Reloading%2E%22%29%3B%0Areload%28%29%3B%0A%7D%2C%2010000%29%3B%0A%7D%29%3B%0A%3C%2Fscript%3E%0A%0A%3C%21%2D%2D%20block%20scripts%20%2D%2D%3E%0A%3C%2Fhtml%3E%0A" width="100%" height="600" frameborder="0" scrolling="yes">
-</iframe>
 </section>
 
 </main>
