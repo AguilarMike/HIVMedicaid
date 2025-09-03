@@ -10,6 +10,6 @@ Exploratory Data Analysis: https://aguilarmike.github.io/HIVMedicaid/HIV-Medicai
 
 Summary of possible treatment effects via level shift around expansion year and detrending analysis: https://aguilarmike.github.io/HIVMedicaid/Level4DeathAgeSex-EDA-Pres.html
 
-I trimmed down to the top candidates.  
+I trimmed down to the top candidates.  See interactive plots here: https://1drv.ms/f/c/e1512a5f00cf9e63/EiwpIOJHyUdIk6rF9xKvVFEB5FyCAnfWz-m8AnmPpjV4wA?e=mVSnhZ  
 
 Contact mike.aguilar@duke.edu with inquiries. 
